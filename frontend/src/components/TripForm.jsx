@@ -73,10 +73,10 @@ export default function TripForm({ onSuccess }) {
         userMessage = 'The request took too long. Please try again.';
       } else if (!navigator.onLine || err.message.toLowerCase().includes('network error')) {
         userMessage = 'We\'re having trouble reaching the AI service.';
+      } else if (err.message && err.message !== 'Request failed with status code 500') {
+        userMessage = err.message;
       } else if (err.status === 500) {
         userMessage = 'The AI returned an unexpected response.';
-      } else if (err.message) {
-        userMessage = err.message;
       }
       
       setError(userMessage);
