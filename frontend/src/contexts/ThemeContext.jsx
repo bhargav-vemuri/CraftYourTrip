@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-const ThemeContext = createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useLocalStorage('craftyourtrip-dark-mode', false);
