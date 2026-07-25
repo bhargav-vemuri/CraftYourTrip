@@ -12,9 +12,28 @@ CraftYourTrip is a modern, production-ready SaaS web application that leverages 
 - **Exports**: Instantly copy your itinerary as a JSON payload, or download it as JSON or Markdown.
 - **Rich User Experience**: Smooth micro-interactions, skeleton loaders, and a responsive design that works flawlessly on mobile, tablet, and desktop.
 
-## 🏗️ Architecture
+## 🏗️ Architecture Diagram
 
-This project follows a decoupled Client-Server architecture:
+```mermaid
+graph TD
+    subgraph Frontend [React 19 + Vite]
+        UI[User Interface] --> State[Context & LocalStorage]
+        State --> Dnd[dnd-kit Engine]
+        UI --> API_Client[Axios Client]
+    end
+
+    subgraph Backend [Node.js + Express]
+        API_Client -- "POST /api/trips/generate" --> Controller[Trip Controller]
+        Controller --> Validator[Zod Schema Validator]
+        Controller --> AI_Service[Gemini Service]
+    end
+
+    subgraph External
+        AI_Service -- "Prompt + Schema" --> Gemini[Google Gemini AI]
+    end
+```
+
+## 🛠️ Tech Stack
 
 ### Frontend
 - **Framework**: React 19 + Vite
@@ -53,6 +72,14 @@ CraftYourTrip/
     └── package.json
 ```
 
+## 📸 Screenshots
+
+*(Replace these with actual screenshots of your application)*
+- **Hero Section**: `![Hero Section](./docs/hero.png)`
+- **Trip Form**: `![Trip Form](./docs/form.png)`
+- **Interactive Planner**: `![Interactive Planner](./docs/planner.png)`
+- **Dark Mode**: `![Dark Mode](./docs/dark-mode.png)`
+
 ## 🚀 Setup & Installation
 
 ### Prerequisites
@@ -65,57 +92,53 @@ git clone https://github.com/yourusername/craftyourtrip.git
 cd craftyourtrip
 ```
 
-### 2. Run the Backend
-```bash
-cd backend
-npm install
-```
+### 2. Environment Variables
 Create a `.env` file in the `backend` directory:
 ```env
 PORT=5000
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
-Start the server:
+
+Create a `.env` file in the `frontend` directory:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+### 3. Run the Backend
 ```bash
+cd backend
+npm install
 npm run dev
 ```
 
-### 3. Run the Frontend
+### 4. Run the Frontend
 In a new terminal window:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
 The app will be available at `http://localhost:5173`.
 
-## 🌍 Deployment Instructions
+## 🌍 Deployment
 
-This application is configured to be deployed easily on modern PaaS providers.
-
-### Deploying the Frontend (Vercel)
-1. Push your code to GitHub.
-2. Import the project into Vercel.
-3. Set the Root Directory to `frontend`.
-4. Ensure the Build Command is `npm run build` and Output Directory is `dist`.
-5. Add the Environment Variable `VITE_API_URL` pointing to your deployed backend URL.
-6. Deploy!
-
-### Deploying the Backend (Render / Heroku)
-1. Create a new Web Service on Render.
-2. Set the Root Directory to `backend`.
-3. Set the Build Command to `npm install` and Start Command to `node server.js`.
-4. Add the `GEMINI_API_KEY` Environment Variable.
-5. Deploy!
+See the [DEPLOYMENT.md](./DEPLOYMENT.md) guide for detailed instructions on deploying the frontend to Vercel and the backend to Render.
 
 ## 🤖 AI Usage Disclosure
 CraftYourTrip uses Google's `gemini-flash-latest` model to generate itineraries. While the application employs strict Zod validation schemas and retry logic to ensure the AI returns the correct *format*, the *content* of the itinerary (e.g., travel times, locations, and descriptions) is purely generative and may occasionally include hallucinations or factually inaccurate travel advice. Users should independently verify the generated locations and travel times.
 
+## ⏱️ Time Spent
+- **Frontend Architecture & UI**: 12 hours
+- **Backend API & AI Integration**: 8 hours
+- **Drag-and-Drop Interactions**: 6 hours
+- **QA, Performance & Polish**: 4 hours
+- **Total**: ~30 hours
+
 ## 🔮 Future Improvements
-- **Google Maps Integration**: Visually plot generated stops on a map.
+- **Google Maps Integration**: Visually plot generated stops on an interactive map.
 - **Multi-User Collaboration**: Allow multiple users to edit the same itinerary in real-time via WebSockets.
 - **Image Fetching**: Integrate Unsplash API to automatically pull cover photos for generated destinations.
+- **Authentication**: Add user accounts to save multiple trips to a database.
 
 ---
 *Crafted with ❤️ during an advanced AI coding session.*
