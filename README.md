@@ -6,6 +6,16 @@ CraftYourTrip is a production-ready web application that leverages Google's Gemi
 
 ---
 
+## 🌐 Live Demo
+
+**Frontend**
+"https://craft-your-trip.vercel.app"
+
+**Backend**
+"https://craftyourtrip.onrender.com"
+
+---
+
 ## ✨ Features
 - **AI-Powered Generation**: Transform unstructured ideas (e.g., *"5 days in Kyoto for a couple who loves matcha and temples with a budget of ₹50,000"*) into organized, structured travel plans.
 - **Interactive Drag & Drop**: Powered by `@dnd-kit`. Easily reorder stops within a single day or drag activities across different days with smooth, physics-based animations.
