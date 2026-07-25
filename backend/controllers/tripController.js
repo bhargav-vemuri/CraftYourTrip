@@ -1,20 +1,34 @@
-const generateTrip = (req, res) => {
-  const { prompt, budget, duration, travelStyle, interests } = req.body;
+const { generateItinerary } = require('../services/geminiService');
+const { validateItineraryJSON } = require('../validators/aiResponseValidator');
 
-  // We have successfully received and validated the request.
-  // We simply return a success response as requested in Stage 3.
-  
-  return res.status(200).json({
-    success: true,
-    message: 'Trip request received successfully.',
-    receivedData: {
-      prompt,
-      budget,
-      duration,
-      travelStyle,
-      interests
+const generateTrip = async (req, res) => {
+  try {
+    const tripDetails = req.body;
+
+    // Call the Gemini service to generate the itinerary
+    const itinerary = await generateItinerary(tripDetails);
+
+    // Validate the response schema
+    const isValid = validateItineraryJSON(itinerary);
+    if (!isValid) {
+      console.error("Generated JSON failed schema validation:", itinerary);
+      return res.status(500).json({
+        success: false,
+        message: 'Invalid AI response.'
+      });
     }
-  });
+
+    return res.status(200).json({
+      success: true,
+      itinerary
+    });
+  } catch (error) {
+    console.error("Trip generation controller error:", error);
+    return res.status(500).json({
+      success: false,
+      message: 'Invalid AI response.'
+    });
+  }
 };
 
 module.exports = {
