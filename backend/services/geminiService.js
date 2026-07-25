@@ -72,7 +72,6 @@ Return ONLY valid JSON matching the requested schema.
       err.code = 'TIMEOUT';
       throw err;
     }
-    console.error("Gemini API Error:", error);
     throw new Error('AI generation failed.');
   }
 };

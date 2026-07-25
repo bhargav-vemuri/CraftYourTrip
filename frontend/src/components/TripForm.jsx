@@ -99,7 +99,9 @@ export default function TripForm({ onSuccess }) {
 
           <form onSubmit={handleSubmit} className="space-y-6" onKeyDown={(e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-              handleSubmit(e);
+              if (!isLoading) {
+                handleSubmit(e);
+              }
             }
           }}>
             <fieldset disabled={isLoading} className="space-y-6">

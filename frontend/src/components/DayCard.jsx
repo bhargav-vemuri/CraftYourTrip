@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import StopCard from './StopCard';
 import EditStopForm from './EditStopForm';
 
-export default function DayCard({ 
+const DayCard = memo(function DayCard({ 
   day, 
   dayIndex, 
   onDeleteDay, 
@@ -90,4 +90,6 @@ export default function DayCard({
       </div>
     </div>
   );
-}
+});
+
+export default DayCard;

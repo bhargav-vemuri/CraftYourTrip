@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import CategoryBadge from './CategoryBadge';
 import ExpandableSection from './ExpandableSection';
 import EditStopForm from './EditStopForm';
 
-export default function StopCard({ 
+const StopCard = memo(function StopCard({ 
   stop, 
   onUpdate, 
   onDelete,
@@ -141,4 +141,6 @@ export default function StopCard({
       </div>
     </div>
   );
-}
+});
+
+export default StopCard;

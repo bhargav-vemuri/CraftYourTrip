@@ -13,7 +13,6 @@ const generateTrip = async (req, res) => {
     const parsedJSON = extractJSON(rawResponseText);
     
     if (!parsedJSON) {
-      console.error("Failed to parse JSON from AI response.");
       return res.status(500).json({
         success: false,
         error: 'Unable to parse AI response.'
@@ -24,7 +23,6 @@ const generateTrip = async (req, res) => {
     const validationResult = itinerarySchema.safeParse(parsedJSON);
     
     if (!validationResult.success) {
-      console.error("Zod schema validation failed:", validationResult.error.format());
       return res.status(500).json({
         success: false,
         error: 'AI returned an invalid itinerary.'
@@ -45,7 +43,6 @@ const generateTrip = async (req, res) => {
       });
     }
 
-    console.error("Trip generation controller error:", error);
     return res.status(500).json({
       success: false,
       error: 'An unexpected backend failure occurred.'
