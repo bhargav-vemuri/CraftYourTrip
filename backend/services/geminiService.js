@@ -1,12 +1,10 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Initialize Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateItinerary = async (tripDetails) => {
   const { prompt, budget, duration, travelStyle, interests } = tripDetails;
   
-  // Use gemini-1.5-flash which is fast and reliable for JSON
   const model = genAI.getGenerativeModel({ 
     model: 'gemini-1.5-flash',
     generationConfig: {
@@ -52,20 +50,30 @@ Generate a travel itinerary with the following details:
 Return ONLY valid JSON matching the requested schema.
 `;
 
+  // Timeout logic (e.g., 20 seconds)
+  const TIMEOUT_MS = 20000;
+
+  const aiPromise = model.generateContent({
+    contents: [
+      { role: 'user', parts: [{ text: systemInstruction + '\n\n' + userPrompt }] }
+    ]
+  });
+
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error('TIMEOUT')), TIMEOUT_MS);
+  });
+
   try {
-    const result = await model.generateContent({
-      contents: [
-        { role: 'user', parts: [{ text: systemInstruction + '\n\n' + userPrompt }] }
-      ]
-    });
-    
-    const responseText = result.response.text();
-    // Parse the JSON to ensure it's valid before returning
-    const parsedJSON = JSON.parse(responseText);
-    return parsedJSON;
+    const result = await Promise.race([aiPromise, timeoutPromise]);
+    return result.response.text();
   } catch (error) {
+    if (error.message === 'TIMEOUT') {
+      const err = new Error('The request timed out.');
+      err.code = 'TIMEOUT';
+      throw err;
+    }
     console.error("Gemini API Error:", error);
-    throw new Error('AI generation failed or returned invalid JSON.');
+    throw new Error('AI generation failed.');
   }
 };
 

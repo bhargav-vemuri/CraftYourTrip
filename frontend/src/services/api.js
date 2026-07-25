@@ -1,21 +1,27 @@
 import axios from 'axios';
 
-// Create an Axios instance with base configuration
 const api = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 seconds timeout
+  timeout: 30000, // 30 seconds max on frontend, backend times out at 20s
 });
 
-// Interceptor for response handling (optional but good practice)
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    // Standardize error format for the app
+    if (axios.isCancel(error)) {
+      const cancelError = new Error('Request cancelled');
+      cancelError.isCancelled = true;
+      return Promise.reject(cancelError);
+    }
+    
     const customError = new Error(
-      error.response?.data?.message || error.message || 'An unexpected error occurred'
+      error.response?.data?.error || 
+      error.response?.data?.message || 
+      error.message || 
+      'An unexpected error occurred'
     );
     customError.status = error.response?.status;
     customError.data = error.response?.data;
