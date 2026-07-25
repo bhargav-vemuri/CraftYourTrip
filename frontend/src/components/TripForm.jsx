@@ -7,7 +7,7 @@ import PrimaryButton from './PrimaryButton';
 import { TripSkeleton } from './Skeletons';
 import ErrorState from './ErrorState';
 import { tripService } from '../services/tripService';
-import { useToast } from '../contexts/ToastContext';
+import { useToast } from '../hooks/useToast';
 
 const TRAVEL_STYLES = ['Solo', 'Couple', 'Family', 'Friends'];
 const INTERESTS_LIST = [

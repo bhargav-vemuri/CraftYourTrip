@@ -5,7 +5,7 @@ import StopCard from './StopCard';
 import ConfirmationDialog from './ConfirmationDialog';
 import EmptyState from './EmptyState';
 import { useDragAndDrop } from '../hooks/useDragAndDrop';
-import { useToast } from '../contexts/ToastContext';
+import { useToast } from '../hooks/useToast';
 
 export default function TripResults({ itinerary: data, onUpdateItinerary: setData }) {
   const [dialog, setDialog] = useState({
