@@ -4,9 +4,10 @@ import InputField from './InputField';
 import TravelStyleSelect from './TravelStyleSelect';
 import InterestSelector from './InterestSelector';
 import PrimaryButton from './PrimaryButton';
-import LoadingState from './LoadingState';
+import { TripSkeleton } from './Skeletons';
 import ErrorState from './ErrorState';
 import { tripService } from '../services/tripService';
+import { useToast } from '../contexts/ToastContext';
 
 const TRAVEL_STYLES = ['Solo', 'Couple', 'Family', 'Friends'];
 const INTERESTS_LIST = [
@@ -24,6 +25,7 @@ export default function TripForm({ onSuccess }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { showToast } = useToast();
   
   const abortControllerRef = useRef(null);
 
@@ -59,6 +61,7 @@ export default function TripForm({ onSuccess }) {
       
       if (response.success && response.itinerary) {
         onSuccess(response.itinerary);
+        showToast('Your itinerary is ready!');
       } else {
         throw new Error('Invalid response');
       }
@@ -94,12 +97,16 @@ export default function TripForm({ onSuccess }) {
         <div className="p-6 sm:p-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-8">Plan Your Next Adventure</h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" onKeyDown={(e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+              handleSubmit(e);
+            }
+          }}>
             <fieldset disabled={isLoading} className="space-y-6">
               <TextAreaField
                 id="trip-description"
                 label="Destination / Trip Description"
-                placeholder="Example: I'm planning a 5-day trip to Japan in December with a budget of $1500. I enjoy anime, street food, temples and nature."
+                placeholder="Example: I'm planning a 5-day trip to Japan in December with a budget of ₹50,000. I enjoy anime, street food, temples and nature."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
@@ -109,7 +116,7 @@ export default function TripForm({ onSuccess }) {
                 <InputField
                   id="budget"
                   label="Budget (Optional)"
-                  placeholder="e.g. $1500"
+                  placeholder="e.g. ₹50,000"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                 />
@@ -163,7 +170,7 @@ export default function TripForm({ onSuccess }) {
         </div>
       </div>
 
-      {isLoading && <LoadingState />}
+      {isLoading && <TripSkeleton />}
       {error && !isLoading && <ErrorState message={error} onRetry={handleSubmit} />}
     </div>
   );

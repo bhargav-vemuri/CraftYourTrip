@@ -42,7 +42,7 @@ EXPECTED JSON SCHEMA:
   const userPrompt = `
 Generate a travel itinerary with the following details:
 - Destination/Description: ${prompt}
-- Budget: ${budget || 'Not specified'}
+- Budget: ${budget || 'Not specified'} (Please ensure the itinerary recommendations fit within this budget. The currency is Indian Rupees / ₹ unless specified otherwise).
 - Duration: ${duration || 'Not specified'}
 - Travel Style: ${travelStyle || 'Not specified'}
 - Interests: ${interests && interests.length > 0 ? interests.join(', ') : 'Not specified'}
@@ -50,8 +50,8 @@ Generate a travel itinerary with the following details:
 Return ONLY valid JSON matching the requested schema.
 `;
 
-  // Timeout logic (e.g., 20 seconds)
-  const TIMEOUT_MS = 20000;
+  // Timeout logic (e.g., 60 seconds)
+  const TIMEOUT_MS = 60000;
 
   const aiPromise = model.generateContent({
     contents: [

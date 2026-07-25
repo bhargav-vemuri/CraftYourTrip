@@ -5,7 +5,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // 30 seconds max on frontend, backend times out at 20s
+  timeout: 65000, // 65 seconds max on frontend, backend times out at 60s
 });
 
 api.interceptors.response.use(
