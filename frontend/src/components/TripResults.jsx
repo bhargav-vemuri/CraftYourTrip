@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { DndContext, closestCorners, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
 import DayCard from './DayCard';
+import StopCard from './StopCard';
 import ConfirmationDialog from './ConfirmationDialog';
+import { useDragAndDrop } from '../hooks/useDragAndDrop';
 
 export default function TripResults({ itinerary }) {
-  // Manage mutable itinerary state locally
   const [data, setData] = useState(itinerary);
   
-  // Confirmation Dialog state
   const [dialog, setDialog] = useState({
     isOpen: false,
     title: '',
@@ -14,11 +15,12 @@ export default function TripResults({ itinerary }) {
     onConfirm: null
   });
 
+  const { sensors, activeId, handleDragStart, handleDragOver, handleDragEnd } = useDragAndDrop(data, setData);
+
   if (!data) return null;
 
   const closeDialog = () => setDialog({ ...dialog, isOpen: false });
 
-  // Immutable Updates
   const handleDeleteDay = (dayIndex) => {
     setDialog({
       isOpen: true,
@@ -63,22 +65,30 @@ export default function TripResults({ itinerary }) {
     }
   };
 
-  const handleMoveStop = (dayIndex, stopIndex, direction) => {
+  // Toggle favorite property on a stop
+  const handleToggleFavorite = (dayIndex, stopId) => {
     const newDays = [...data.days];
-    const stops = newDays[dayIndex].stops;
-    
-    // Bounds check
-    if (
-      (direction === -1 && stopIndex === 0) || 
-      (direction === 1 && stopIndex === stops.length - 1)
-    ) return;
+    const stopIndex = newDays[dayIndex].stops.findIndex(s => s.id === stopId);
+    if (stopIndex > -1) {
+      const stop = newDays[dayIndex].stops[stopIndex];
+      newDays[dayIndex].stops[stopIndex] = { ...stop, isFavorite: !stop.isFavorite };
+      setData({ ...data, days: newDays });
+    }
+  };
 
-    // Swap
-    const temp = stops[stopIndex];
-    stops[stopIndex] = stops[stopIndex + direction];
-    stops[stopIndex + direction] = temp;
-    
-    setData({ ...data, days: newDays });
+  // Find active stop for the DragOverlay
+  const getActiveStop = () => {
+    if (!activeId) return null;
+    for (const day of data.days) {
+      const stop = day.stops.find(s => s.id === activeId);
+      if (stop) return stop;
+    }
+    return null;
+  };
+  const activeStop = getActiveStop();
+
+  const dropAnimation = {
+    sideEffects: defaultDropAnimationSideEffects({ styles: { active: { opacity: '0.4' } } }),
   };
 
   return (
@@ -92,27 +102,47 @@ export default function TripResults({ itinerary }) {
         </p>
       </div>
 
-      <div className="space-y-8">
-        {data.days.map((day, index) => (
-          <DayCard 
-            key={`day-${day.day}-${index}`} 
-            day={day} 
-            dayIndex={index}
-            onDeleteDay={handleDeleteDay}
-            onAddStop={handleAddStop}
-            onUpdateStop={handleUpdateStop}
-            onDeleteStop={handleDeleteStop}
-            onMoveStop={handleMoveStop}
-          />
-        ))}
-        
-        {data.days.length === 0 && (
-          <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
-            <h3 className="text-lg font-medium text-gray-900">Your itinerary is empty</h3>
-            <p className="text-gray-500 mt-2">You deleted all the days. Time to start over!</p>
-          </div>
-        )}
-      </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="space-y-8">
+          {data.days.map((day, index) => (
+            <DayCard 
+              key={`day-${day.day}-${index}`} 
+              day={day} 
+              dayIndex={index}
+              onDeleteDay={handleDeleteDay}
+              onAddStop={handleAddStop}
+              onUpdateStop={handleUpdateStop}
+              onDeleteStop={handleDeleteStop}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          ))}
+          
+          {data.days.length === 0 && (
+            <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <h3 className="text-lg font-medium text-gray-900">Your itinerary is empty</h3>
+              <p className="text-gray-500 mt-2">You deleted all the days. Time to start over!</p>
+            </div>
+          )}
+        </div>
+
+        <DragOverlay dropAnimation={dropAnimation}>
+          {activeStop ? (
+            <StopCard 
+              stop={activeStop} 
+              isOverlay={true}
+              onUpdate={() => {}}
+              onDelete={() => {}}
+              onToggleFavorite={() => {}}
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       <ConfirmationDialog 
         isOpen={dialog.isOpen}
