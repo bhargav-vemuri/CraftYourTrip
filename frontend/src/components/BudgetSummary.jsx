@@ -33,27 +33,38 @@ export default function BudgetSummary({ itinerary }) {
   const isOverBudget = budget && finalEstimatedCost > budget;
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-      <div>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <div className="relative overflow-hidden bg-zinc-900 rounded-3xl shadow-2xl p-6 mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 border border-zinc-800">
+      
+      {/* Decorative background glow */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-[60px] pointer-events-none"></div>
+      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-[60px] pointer-events-none"></div>
+
+      <div className="relative z-10">
+        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
           Budget Intelligence
         </h3>
-        <p className="text-sm text-gray-500 mt-1">AI-estimated costs are approximate and exclude flights.</p>
+        <p className="text-sm text-zinc-400 mt-2 font-medium">AI-estimated costs are approximate and exclude flights.</p>
       </div>
 
-      <div className="flex items-center gap-8">
+      <div className="relative z-10 flex items-center gap-6 sm:gap-10 bg-black/40 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/5">
         {budget > 0 && (
           <div className="text-center sm:text-right">
-            <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Target Budget</p>
-            <p className="text-xl font-bold text-gray-900 dark:text-white">{formatMoney(budget)}</p>
+            <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Target Budget</p>
+            <p className="text-2xl font-black text-white">{formatMoney(budget)}</p>
           </div>
+        )}
+        
+        {budget > 0 && finalEstimatedCost > 0 && (
+          <div className="w-px h-12 bg-zinc-800"></div>
         )}
         
         {finalEstimatedCost > 0 && (
           <div className="text-center sm:text-right">
-            <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Est. Total</p>
-            <p className={`text-xl font-bold ${isOverBudget ? 'text-red-500' : 'text-green-500'}`}>
+            <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Est. Total</p>
+            <p className={`text-2xl font-black ${isOverBudget ? 'text-rose-400' : 'text-emerald-400'}`}>
               {formatMoney(finalEstimatedCost)}
             </p>
           </div>

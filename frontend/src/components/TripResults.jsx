@@ -132,11 +132,11 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
   return (
     <div className="w-full max-w-7xl mx-auto mb-20 animate-fade-in relative px-4">
       
-      <div className="text-center mb-10">
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
+      <div className="text-center mb-16 relative">
+        <h2 className="text-5xl sm:text-6xl font-black text-zinc-900 dark:text-white mb-6 tracking-tighter leading-tight drop-shadow-sm">
           {data.tripTitle}
         </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-light leading-relaxed mb-6">
+        <p className="text-xl sm:text-2xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto font-medium leading-relaxed mb-6">
           {data.summary}
         </p>
       </div>
@@ -197,7 +197,7 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
         </div>
 
         {/* Right Column: Sticky Map */}
-        <div className="w-full lg:w-2/5 order-1 lg:order-2 lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-140px)] z-10">
+        <div className="w-full lg:w-2/5 order-1 lg:order-2 lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-140px)] z-10 shadow-2xl rounded-3xl overflow-hidden ring-1 ring-zinc-200 dark:ring-white/10 transition-shadow hover:shadow-[0_20px_60px_-15px_rgba(124,58,237,0.3)]">
           <Map 
             itinerary={data} 
             activeStopId={activeStopId || dragActiveId}

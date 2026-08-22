@@ -6,13 +6,14 @@ export default function PrimaryButton({ type = 'submit', onClick, children, disa
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`w-full sm:w-auto px-8 py-4 font-bold rounded-xl shadow-md transition-all duration-200 text-lg flex justify-center items-center gap-2 ${
+      className={`relative w-full sm:w-auto px-8 py-4 font-bold rounded-2xl transition-all duration-300 text-lg flex justify-center items-center gap-2 overflow-hidden group ${
         disabled 
-          ? 'bg-gray-400 text-gray-100 cursor-not-allowed shadow-none'
-          : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+          ? 'bg-zinc-300 dark:bg-zinc-800 text-zinc-500 cursor-not-allowed shadow-none'
+          : 'bg-gradient-to-r from-violet-600 via-fuchsia-600 to-indigo-600 text-white shadow-[0_0_40px_-10px_rgba(124,58,237,0.5)] hover:shadow-[0_0_60px_-15px_rgba(124,58,237,0.7)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95'
       }`}
     >
-      {children}
+      {!disabled && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>}
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
     </button>
   );
 }

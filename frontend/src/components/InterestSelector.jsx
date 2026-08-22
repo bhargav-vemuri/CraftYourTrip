@@ -12,10 +12,10 @@ export default function InterestSelector({ label, interests, selectedInterests, 
 
   return (
     <div className="flex flex-col mb-6">
-      <label className="block text-sm font-semibold text-gray-700 mb-3">
+      <label className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-4">
         {label}
       </label>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-3">
         {interests.map((interest) => {
           const isSelected = selectedInterests.includes(interest);
           return (
@@ -24,12 +24,12 @@ export default function InterestSelector({ label, interests, selectedInterests, 
               type="button"
               disabled={disabled}
               onClick={() => toggleInterest(interest)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 border ${
                 disabled
-                  ? isSelected ? 'bg-blue-50 text-blue-400 border-blue-200 cursor-not-allowed opacity-70' : 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed opacity-70'
+                  ? isSelected ? 'bg-violet-50 text-violet-400 border-violet-200 cursor-not-allowed opacity-70' : 'bg-zinc-50 text-zinc-400 border-zinc-200 cursor-not-allowed opacity-70'
                   : isSelected
-                    ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                    ? 'bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-500/30 scale-105'
+                    : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-violet-300 dark:hover:border-violet-700 hover:text-violet-600 dark:hover:text-violet-400'
               }`}
             >
               {interest}

@@ -3,8 +3,8 @@ import React from 'react';
 export default function TravelStyleSelect({ id, label, value, onChange, options, required = false }) {
   return (
     <div className="flex flex-col mb-4">
-      <label htmlFor={id} className="block text-sm font-semibold text-gray-700 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label htmlFor={id} className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">
+        {label} {required && <span className="text-violet-500">*</span>}
       </label>
       <div className="relative">
         <select
@@ -12,7 +12,7 @@ export default function TravelStyleSelect({ id, label, value, onChange, options,
           value={value}
           onChange={onChange}
           required={required}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm outline-none text-gray-900 appearance-none bg-white cursor-pointer"
+          className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all shadow-sm outline-none text-zinc-900 dark:text-zinc-100 appearance-none cursor-pointer"
         >
           <option value="" disabled>Select {label.toLowerCase()}</option>
           {options.map((option) => (

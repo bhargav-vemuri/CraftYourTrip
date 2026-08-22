@@ -94,29 +94,37 @@ export default function TripForm({ onSuccess }) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto mb-16">
-      <div className="bg-white rounded-2xl shadow-xl shadow-blue-900/5 border border-gray-100 overflow-hidden mb-8">
-        <div className="p-6 sm:p-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">Plan Your Next Adventure</h2>
+    <div className="w-full max-w-3xl mx-auto mb-16 relative">
+      {/* Decorative background glow behind form */}
+      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 blur-xl transform scale-105 rounded-3xl z-0"></div>
 
-          <form onSubmit={handleSubmit} className="space-y-6" onKeyDown={(e) => {
+      <div className="relative z-10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-zinc-800/80 overflow-hidden mb-8">
+        <div className="p-8 sm:p-12">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center">
+              <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white tracking-tight">Design Your Trip</h2>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-8" onKeyDown={(e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
               if (!isLoading) {
                 handleSubmit(e);
               }
             }
           }}>
-            <fieldset disabled={isLoading} className="space-y-6">
+            <fieldset disabled={isLoading} className="space-y-8">
               <TextAreaField
                 id="trip-description"
-                label="Destination / Trip Description"
-                placeholder="Example: I'm planning a 5-day trip to Japan in December with a budget of ₹50,000. I enjoy anime, street food, temples and nature."
+                label="Destination & Vibe"
+                placeholder="Where to? (e.g., 'A 5-day cyberpunk street food tour of Tokyo')"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-zinc-50/50 dark:bg-zinc-950/50 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
                 <InputField
                   id="budget"
                   label="Budget (Optional)"
@@ -155,7 +163,7 @@ export default function TripForm({ onSuccess }) {
               </div>
 
               <InterestSelector
-                label="Interests"
+                label="What excites you?"
                 interests={INTERESTS_LIST}
                 selectedInterests={interests}
                 onChange={setInterests}
@@ -164,9 +172,11 @@ export default function TripForm({ onSuccess }) {
             </fieldset>
 
             {!isLoading && !error && (
-              <div className="pt-4 flex justify-center sm:justify-end border-t border-gray-100">
+              <div className="pt-6 flex justify-center sm:justify-end border-t border-zinc-200/50 dark:border-zinc-800/50">
                 <PrimaryButton type="submit" disabled={isLoading}>
-                  ✨ Craft My Trip
+                  <span className="flex items-center gap-2">
+                    ✨ Generate Intelligence
+                  </span>
                 </PrimaryButton>
               </div>
             )}
