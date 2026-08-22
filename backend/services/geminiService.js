@@ -61,7 +61,7 @@ const getCompletion = async (systemInstruction, userPrompt) => {
       { role: 'system', content: systemInstruction },
       { role: 'user', content: userPrompt }
     ],
-    model: 'llama3-70b-8192',
+    model: 'openai/gpt-oss-120b',
     response_format: { type: 'json_object' }
   });
 
