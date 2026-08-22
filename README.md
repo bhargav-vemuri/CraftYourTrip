@@ -142,7 +142,7 @@ In a separate terminal window, navigate to the backend directory and start the E
 ```bash
 cd backend
 npm install
-npm run dev
+npm start
 ```
 The API server will run on `http://localhost:5000`.
 

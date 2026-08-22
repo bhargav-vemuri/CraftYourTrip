@@ -54,7 +54,8 @@ const generateTrip = async (req, res) => {
     // 2. Validate Schema
     const validationResult = itinerarySchema.safeParse(parsedJSON);
     if (!validationResult.success) {
-      return res.status(500).json({ success: false, error: 'AI returned an invalid itinerary schema.' });
+      console.error('Zod Validation Error:', validationResult.error);
+      return res.status(500).json({ success: false, error: 'AI returned an invalid itinerary schema.', details: validationResult.error });
     }
 
     const itinerary = validationResult.data;

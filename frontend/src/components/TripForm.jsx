@@ -72,12 +72,14 @@ export default function TripForm({ onSuccess }) {
       }
       
       let userMessage = 'We encountered an unexpected error.';
-      if (err.status === 504 || err.message === 'The request timed out.') {
+      const errMsg = err.error || err.message || '';
+      
+      if (err.status === 504 || errMsg === 'The request timed out.') {
         userMessage = 'The request took too long. Please try again.';
-      } else if (!navigator.onLine || err.message.toLowerCase().includes('network error')) {
+      } else if (!navigator.onLine || errMsg.toLowerCase().includes('network error')) {
         userMessage = 'We\'re having trouble reaching the AI service.';
-      } else if (err.message && err.message !== 'Request failed with status code 500') {
-        userMessage = err.message;
+      } else if (errMsg && errMsg !== 'Request failed with status code 500') {
+        userMessage = errMsg;
       } else if (err.status === 500) {
         userMessage = 'The AI returned an unexpected response.';
       }
