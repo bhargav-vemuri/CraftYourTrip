@@ -12,40 +12,39 @@
   --animate-float-delayed: float 7s ease-in-out 3.5s infinite;
   --animate-float-slow: float 10s ease-in-out 1s infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slide-up {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-25px) scale(1.03); }
-  }
-
-  @keyframes gradient-x {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-  }
-  
   --animate-gradient-x: gradient-x 3s ease infinite;
 }
 
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-25px) scale(1.03); }
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+}
+
 /* Stagger utilities for smooth waterfall animations */
-.animate-stagger-1 { animation-delay: 100ms; opacity: 0; }
-.animate-stagger-2 { animation-delay: 200ms; opacity: 0; }
-.animate-stagger-3 { animation-delay: 300ms; opacity: 0; }
-.animate-stagger-4 { animation-delay: 400ms; opacity: 0; }
-.animate-stagger-5 { animation-delay: 500ms; opacity: 0; }
+.animate-stagger-1 { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 100ms; opacity: 0; }
+.animate-stagger-2 { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 200ms; opacity: 0; }
+.animate-stagger-3 { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 300ms; opacity: 0; }
+.animate-stagger-4 { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 400ms; opacity: 0; }
+.animate-stagger-5 { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 500ms; opacity: 0; }
 
 body {
   margin: 0;
