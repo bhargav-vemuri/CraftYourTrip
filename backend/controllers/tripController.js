@@ -98,7 +98,7 @@ const generateTrip = async (req, res) => {
       if (totalSeconds > 0) {
         const h = Math.floor(totalSeconds / 3600);
         const m = Math.floor((totalSeconds % 3600) / 60);
-        day.totalTravelTime = h > 0 ? \`\${h}h \${m}m\` : \`\${m} min\`;
+        day.totalTravelTime = h > 0 ? `${h}h ${m}m` : `${m} min`;
       }
     }
 
