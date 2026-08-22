@@ -52,7 +52,7 @@ const DayCard = memo(function DayCard({
               {day.day}
             </div>
           </div>
-          <div className="pr-12 sm:pr-0">
+          <div className="pr-24 sm:pr-48">
             <h3 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white tracking-tight">{day.title}</h3>
             {day.summary && <p className="text-sm text-stone-500 dark:text-stone-400 mt-1 font-medium">{day.summary}</p>}
           </div>

@@ -43,6 +43,10 @@ EXPECTED JSON SCHEMA:
           "duration": "String (e.g., '2 hours')",
           "category": "String (e.g., 'Culture', 'Food', 'Nature')",
           "estimatedCost": Number (Cost for this stop),
+          "coordinates": {
+            "lat": Number (Approximate latitude of this place),
+            "lng": Number (Approximate longitude of this place)
+          },
           "why": "String (Why this was recommended)"
         }
       ]
@@ -118,6 +122,7 @@ EXPECTED JSON SCHEMA:
       "duration": "String",
       "category": "String",
       "estimatedCost": Number,
+      "coordinates": { "lat": Number, "lng": Number },
       "why": "String"
     }
   ]
@@ -155,6 +160,7 @@ EXPECTED JSON SCHEMA:
   "duration": "String",
   "category": "String",
   "estimatedCost": Number,
+  "coordinates": { "lat": Number, "lng": Number },
   "why": "String"
 }
   `;
