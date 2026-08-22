@@ -5,34 +5,34 @@ export default function Layout({ children }) {
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
-    <div className="min-h-screen relative flex flex-col font-sans text-gray-900 dark:text-gray-100 selection:bg-fuchsia-300/30">
+    <div className="min-h-screen relative flex flex-col font-sans text-stone-900 dark:text-stone-100 selection:bg-emerald-300/30">
       
       {/* Background with glowing orbs */}
-      <div className="fixed inset-0 -z-10 bg-slate-50 dark:bg-zinc-950 transition-colors duration-500 overflow-hidden">
-        {/* Abstract blur background elements */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-violet-400/20 dark:bg-violet-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-400/20 dark:bg-fuchsia-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
-        <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] rounded-full bg-blue-300/20 dark:bg-blue-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
+      <div className="fixed inset-0 -z-10 bg-stone-50 dark:bg-stone-950 transition-colors duration-500 overflow-hidden">
+        {/* Abstract blur background elements with earthy tones */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-400/20 dark:bg-emerald-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-teal-400/20 dark:bg-teal-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float-delayed"></div>
+        <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] rounded-full bg-amber-300/20 dark:bg-amber-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-pulse-slow"></div>
         {/* Noise overlay for texture */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] dark:opacity-[0.05] pointer-events-none mix-blend-overlay"></div>
       </div>
       
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/50 dark:bg-zinc-950/50 border-b border-white/20 dark:border-zinc-800/50 supports-[backdrop-filter]:bg-white/40 shadow-sm">
+      <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-stone-50/50 dark:bg-stone-950/50 border-b border-stone-200/20 dark:border-stone-800/50 supports-[backdrop-filter]:bg-stone-50/40 shadow-sm transition-all duration-300">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           
           <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.location.reload()}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-violet-500/30 group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
               C
             </div>
-            <span className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 tracking-tighter">
+            <span className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 tracking-tighter">
               CraftYourTrip
             </span>
           </div>
 
           <button
             onClick={toggleDarkMode}
-            className="p-2.5 rounded-xl bg-white/80 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-800 border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm transition-all hover:scale-105 active:scale-95"
+            className="p-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 text-stone-600 dark:text-stone-300 hover:bg-white dark:hover:bg-stone-800 border border-stone-200/50 dark:border-stone-800/50 shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-md hover:border-emerald-200 dark:hover:border-emerald-800"
             aria-label="Toggle Dark Mode"
           >
             {isDarkMode ? (
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-8 text-center text-zinc-500 dark:text-zinc-500 text-sm mt-auto z-10 font-medium">
+      <footer className="w-full py-8 text-center text-stone-500 dark:text-stone-500 text-sm mt-auto z-10 font-medium">
         &copy; {new Date().getFullYear()} CraftYourTrip. Crafted with AI.
       </footer>
     </div>

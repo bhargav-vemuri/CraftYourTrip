@@ -94,17 +94,17 @@ export default function TripForm({ onSuccess }) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto mb-16 relative">
+    <div className="w-full max-w-3xl mx-auto mb-16 relative animate-slide-up">
       {/* Decorative background glow behind form */}
-      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 blur-xl transform scale-105 rounded-3xl z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-xl transform scale-105 rounded-3xl z-0 animate-pulse-slow"></div>
 
-      <div className="relative z-10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-zinc-800/80 overflow-hidden mb-8">
+      <div className="relative z-10 bg-white/60 dark:bg-stone-900/60 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-stone-800/80 overflow-hidden mb-8 transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.06)] dark:hover:shadow-[0_8px_40px_rgb(0,0,0,0.3)]">
         <div className="p-8 sm:p-12">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center">
-              <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center shadow-sm">
+              <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white tracking-tight">Design Your Trip</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white tracking-tight">Design Your Trip</h2>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8" onKeyDown={(e) => {
@@ -124,7 +124,7 @@ export default function TripForm({ onSuccess }) {
                 required
               />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-zinc-50/50 dark:bg-zinc-950/50 p-6 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-50/50 dark:bg-stone-950/50 p-6 rounded-2xl border border-stone-100 dark:border-stone-800/50">
                 <InputField
                   id="budget"
                   label="Budget (Optional)"
@@ -172,7 +172,7 @@ export default function TripForm({ onSuccess }) {
             </fieldset>
 
             {!isLoading && !error && (
-              <div className="pt-6 flex justify-center sm:justify-end border-t border-zinc-200/50 dark:border-zinc-800/50">
+              <div className="pt-6 flex justify-center sm:justify-end border-t border-stone-200/50 dark:border-stone-800/50">
                 <PrimaryButton type="submit" disabled={isLoading}>
                   <span className="flex items-center gap-2">
                     ✨ Generate Intelligence

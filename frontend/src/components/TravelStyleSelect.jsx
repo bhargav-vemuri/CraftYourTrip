@@ -3,30 +3,30 @@ import React from 'react';
 export default function TravelStyleSelect({ id, label, value, onChange, options, required = false }) {
   return (
     <div className="flex flex-col mb-4">
-      <label htmlFor={id} className="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">
-        {label} {required && <span className="text-violet-500">*</span>}
+      <label className="block text-sm font-bold text-stone-800 dark:text-stone-200 mb-3">
+        {label} {required && <span className="text-emerald-500">*</span>}
       </label>
-      <div className="relative">
-        <select
-          id={id}
-          value={value}
-          onChange={onChange}
-          required={required}
-          className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all shadow-sm outline-none text-zinc-900 dark:text-zinc-100 appearance-none cursor-pointer"
-        >
-          <option value="" disabled>Select {label.toLowerCase()}</option>
-          {options.map((option) => (
-            <option key={option} value={option}>
+      <div className="grid grid-cols-2 gap-2">
+        {options.map((option) => {
+          const isSelected = value === option;
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onChange(option)}
+              className={`px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 border flex items-center justify-center ${
+                isSelected
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-500/30 scale-105'
+                  : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-800 hover:border-emerald-400 dark:hover:border-emerald-600 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10'
+              }`}
+            >
               {option}
-            </option>
-          ))}
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
+            </button>
+          );
+        })}
       </div>
+      {/* Hidden input to maintain HTML required validation */}
+      <input type="text" id={id} required={required} value={value} readOnly className="sr-only" tabIndex={-1} />
     </div>
   );
 }

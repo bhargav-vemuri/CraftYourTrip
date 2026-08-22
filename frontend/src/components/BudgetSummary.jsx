@@ -33,11 +33,11 @@ export default function BudgetSummary({ itinerary }) {
   const isOverBudget = budget && finalEstimatedCost > budget;
 
   return (
-    <div className="relative overflow-hidden bg-zinc-900 rounded-3xl shadow-2xl p-6 mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 border border-zinc-800">
+    <div className="relative overflow-hidden bg-stone-900 rounded-3xl shadow-2xl p-6 mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 border border-stone-800">
       
       {/* Decorative background glow */}
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-[60px] pointer-events-none"></div>
-      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-[60px] pointer-events-none"></div>
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-[60px] pointer-events-none animate-pulse-slow"></div>
+      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/20 rounded-full blur-[60px] pointer-events-none animate-pulse-slow" style={{animationDelay: '2s'}}></div>
 
       <div className="relative z-10">
         <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -46,24 +46,24 @@ export default function BudgetSummary({ itinerary }) {
           </div>
           Budget Intelligence
         </h3>
-        <p className="text-sm text-zinc-400 mt-2 font-medium">AI-estimated costs are approximate and exclude flights.</p>
+        <p className="text-sm text-stone-400 mt-2 font-medium">AI-estimated costs are approximate and exclude flights.</p>
       </div>
 
       <div className="relative z-10 flex items-center gap-6 sm:gap-10 bg-black/40 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/5">
         {budget > 0 && (
           <div className="text-center sm:text-right">
-            <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Target Budget</p>
+            <p className="text-xs text-stone-500 uppercase tracking-widest font-bold mb-1">Target Budget</p>
             <p className="text-2xl font-black text-white">{formatMoney(budget)}</p>
           </div>
         )}
         
         {budget > 0 && finalEstimatedCost > 0 && (
-          <div className="w-px h-12 bg-zinc-800"></div>
+          <div className="w-px h-12 bg-stone-800"></div>
         )}
         
         {finalEstimatedCost > 0 && (
           <div className="text-center sm:text-right">
-            <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-1">Est. Total</p>
+            <p className="text-xs text-stone-500 uppercase tracking-widest font-bold mb-1">Est. Total</p>
             <p className={`text-2xl font-black ${isOverBudget ? 'text-rose-400' : 'text-emerald-400'}`}>
               {formatMoney(finalEstimatedCost)}
             </p>
