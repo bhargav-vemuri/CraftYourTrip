@@ -1,10 +1,7 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const getModel = () => genAI.getGenerativeModel({ 
-  model: 'gemini-3.6-flash',
-  generationConfig: { responseMimeType: 'application/json' }
+const groq = new Groq({ 
+  apiKey: process.env.GROQ_API_KEY || 'MISSING_API_KEY' // Fallback handled gracefully if missing
 });
 
 const TIMEOUT_MS = 60000;
@@ -54,9 +51,26 @@ EXPECTED JSON SCHEMA:
 }
 `;
 
+const getCompletion = async (systemInstruction, userPrompt) => {
+  if (process.env.GROQ_API_KEY === undefined || process.env.GROQ_API_KEY === '') {
+    throw new Error('Groq API key is missing. Please add GROQ_API_KEY to your environment variables.');
+  }
+
+  const aiPromise = groq.chat.completions.create({
+    messages: [
+      { role: 'system', content: systemInstruction },
+      { role: 'user', content: userPrompt }
+    ],
+    model: 'llama3-70b-8192',
+    response_format: { type: 'json_object' }
+  });
+
+  const result = await runWithTimeout(aiPromise);
+  return result.choices[0].message.content;
+};
+
 const generateItinerary = async (tripDetails) => {
   const { prompt, budget, duration, travelStyle, interests } = tripDetails;
-  const model = getModel();
 
   const systemInstruction = `
 You are an expert AI travel planner. Generate a highly personalized travel itinerary.
@@ -77,11 +91,7 @@ Estimate costs realistically.
 `;
 
   try {
-    const aiPromise = model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: systemInstruction + '\n\n' + userPrompt }] }]
-    });
-    const result = await runWithTimeout(aiPromise);
-    return result.response.text();
+    return await getCompletion(systemInstruction, userPrompt);
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
     throw new Error(error.message || 'AI generation failed.');
@@ -89,8 +99,6 @@ Estimate costs realistically.
 };
 
 const optimizeDay = async (dayContext, constraints) => {
-  const model = getModel();
-
   const systemInstruction = `
 You are an AI travel optimizer. You are given a specific day from an itinerary.
 Your job is to optimize this day based on the user's constraints (e.g., reorder for better travel time, swap activities to fit budget, etc.).
@@ -127,11 +135,7 @@ Provide the optimized day JSON now. Keep it realistic.
   `;
 
   try {
-    const aiPromise = model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: systemInstruction + '\n\n' + userPrompt }] }]
-    });
-    const result = await runWithTimeout(aiPromise);
-    return result.response.text();
+    return await getCompletion(systemInstruction, userPrompt);
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
     throw new Error(error.message || 'AI optimization failed.');
@@ -139,8 +143,6 @@ Provide the optimized day JSON now. Keep it realistic.
 };
 
 const replaceStop = async (stopContext, itineraryContext, userInstruction) => {
-  const model = getModel();
-
   const systemInstruction = `
 You are an AI travel assistant. The user wants to replace a specific stop in their itinerary.
 Provide a single new stop that fits the criteria.
@@ -171,11 +173,7 @@ Provide the replacement stop JSON now.
   `;
 
   try {
-    const aiPromise = model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: systemInstruction + '\n\n' + userPrompt }] }]
-    });
-    const result = await runWithTimeout(aiPromise);
-    return result.response.text();
+    return await getCompletion(systemInstruction, userPrompt);
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
     throw new Error(error.message || 'AI replacement failed.');

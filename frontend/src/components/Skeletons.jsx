@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 const LOADING_PHRASES = [
-  "✨ Crafting your perfect itinerary...",
-  "🗺️ Searching for hidden gems...",
-  "🚗 Calculating real-world travel routes...",
-  "⛅ Checking the weather forecasts...",
-  "🎯 Optimizing for the best experience...",
-  "🧳 Almost there, packing the bags..."
+  "Crafting your perfect itinerary...",
+  "Searching for hidden gems...",
+  "Calculating real-world travel routes...",
+  "Checking the weather forecasts...",
+  "Optimizing for the best experience...",
+  "Almost there, packing the bags..."
 ];
 
 export function TripSkeleton() {
@@ -22,11 +22,10 @@ export function TripSkeleton() {
   return (
     <div className="w-full max-w-4xl mx-auto mb-20 relative flex items-center justify-center min-h-[400px]">
       
-      {/* Animated Loading Phrase Only */}
       <div className="text-center flex flex-col items-center justify-center">
         <h3 
           key={phraseIndex} 
-          className="text-2xl sm:text-4xl font-black text-stone-800 dark:text-stone-100 tracking-tight animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-amber-600 to-teal-600"
+          className="text-2xl sm:text-4xl font-black text-stone-800 dark:text-stone-100 tracking-tight animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-amber-600 to-teal-600 pb-2 leading-relaxed"
         >
           {LOADING_PHRASES[phraseIndex]}
         </h3>
