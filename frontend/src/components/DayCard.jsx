@@ -26,37 +26,39 @@ const DayCard = memo(function DayCard({
   return (
     <div className="mb-12 bg-white/70 dark:bg-stone-900/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-stone-800/80 p-6 sm:p-8 relative group/day transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.3)]">
       
-      <div className="absolute top-6 right-6 flex gap-2 z-20">
-        <button 
-          onClick={onOptimize}
-          className="px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-teal-500 to-emerald-600 rounded-lg shadow-sm hover:shadow-md transition-all opacity-0 group-hover/day:opacity-100 flex items-center gap-1 hover:scale-105"
-          title="Ask AI to optimize this day"
-        >
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          Optimize Day
-        </button>
-        <button 
-          onClick={() => onDeleteDay(dayIndex)}
-          className="p-1.5 text-stone-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg opacity-0 group-hover/day:opacity-100 transition-opacity"
-          title="Delete entire day"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-        </button>
-      </div>
-
-      <div className="mb-10 flex flex-col sm:flex-row sm:items-center gap-6 border-b border-stone-100 dark:border-stone-800 pb-6 relative">
-        <div className="flex items-center gap-5">
+      <div className="mb-10 flex flex-col xl:flex-row xl:items-start gap-6 border-b border-stone-100 dark:border-stone-800 pb-6 relative">
+        <div className="flex items-center gap-5 flex-1">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl blur opacity-40"></div>
             <div className="relative bg-gradient-to-br from-emerald-600 to-teal-600 text-white w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl shadow-lg border border-white/20 shrink-0">
               {day.day}
             </div>
           </div>
-          <div className="pr-24 sm:pr-48">
+          <div>
             <h3 className="text-2xl sm:text-3xl font-black text-stone-900 dark:text-white tracking-tight">{day.title}</h3>
             {day.summary && <p className="text-sm text-stone-500 dark:text-stone-400 mt-1 font-medium">{day.summary}</p>}
           </div>
         </div>
+
+        <div className="flex flex-col items-end gap-3">
+          {/* Action Buttons */}
+          <div className="flex gap-2 z-20">
+            <button 
+              onClick={onOptimize}
+              className="px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-teal-500 to-emerald-600 rounded-lg shadow-sm hover:shadow-md transition-all opacity-0 group-hover/day:opacity-100 flex items-center gap-1 hover:scale-105"
+              title="Ask AI to optimize this day"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Optimize Day
+            </button>
+            <button 
+              onClick={() => onDeleteDay(dayIndex)}
+              className="p-1.5 text-stone-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg opacity-0 group-hover/day:opacity-100 transition-opacity"
+              title="Delete entire day"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+          </div>
 
         {/* Intelligence Badges (Weather, Cost, Travel Time) */}
         <div className="flex flex-wrap items-center gap-2 sm:ml-auto mt-2 sm:mt-0 text-xs font-bold text-stone-600 dark:text-stone-400">
@@ -80,6 +82,7 @@ const DayCard = memo(function DayCard({
           )}
         </div>
       </div>
+    </div>
       
       <div ref={setNodeRef} className="relative min-h-[50px]">
         {day.stops.length === 0 ? (

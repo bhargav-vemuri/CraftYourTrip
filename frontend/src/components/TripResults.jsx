@@ -130,7 +130,7 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
   const onStopClick = (stopId) => setActiveStopId(stopId);
 
   return (
-    <div className="w-full max-w-7xl mx-auto mb-20 animate-fade-in relative px-4">
+    <div className="w-full max-w-7xl mx-auto mb-20 relative px-4">
       
       <div className="text-center mb-16 relative">
         <h2 className="text-5xl sm:text-6xl font-black text-stone-900 dark:text-white mb-6 tracking-tighter leading-tight drop-shadow-sm">
