@@ -126,7 +126,7 @@ export default function TripForm({ onSuccess }) {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-50/50 dark:bg-stone-950/50 p-6 rounded-2xl border border-stone-100 dark:border-stone-800/50 animate-stagger-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-50/50 dark:bg-stone-950/50 p-6 rounded-2xl border border-stone-100 dark:border-stone-800/50 animate-stagger-3 relative z-20">
                 <InputField
                   id="budget"
                   label="Budget (Optional)"
@@ -159,12 +159,12 @@ export default function TripForm({ onSuccess }) {
                   label="Travel Style"
                   options={TRAVEL_STYLES}
                   value={travelStyle}
-                  onChange={(e) => setTravelStyle(e.target.value)}
+                  onChange={(value) => setTravelStyle(value)}
                   required
                 />
               </div>
 
-              <div className="animate-stagger-4">
+              <div className="animate-stagger-4 relative z-10">
                 <InterestSelector
                   label="What excites you?"
                   interests={INTERESTS_LIST}
