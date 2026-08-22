@@ -98,9 +98,9 @@ export default function TripForm({ onSuccess }) {
       {/* Decorative background glow behind form */}
       <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-xl transform scale-105 rounded-3xl z-0 animate-pulse-slow"></div>
 
-      <div className="relative z-10 bg-white/60 dark:bg-stone-900/60 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-stone-800/80 overflow-hidden mb-8 transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.06)] dark:hover:shadow-[0_8px_40px_rgb(0,0,0,0.3)]">
+      <div className="relative z-10 bg-white/60 dark:bg-stone-900/60 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-stone-800/80 mb-8 transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.06)] dark:hover:shadow-[0_8px_40px_rgb(0,0,0,0.3)]">
         <div className="p-8 sm:p-12">
-          <div className="flex items-center gap-3 mb-8">
+          <div className="flex items-center gap-3 mb-8 animate-stagger-1">
             <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center shadow-sm">
               <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
@@ -115,16 +115,18 @@ export default function TripForm({ onSuccess }) {
             }
           }}>
             <fieldset disabled={isLoading} className="space-y-8">
-              <TextAreaField
-                id="trip-description"
-                label="Destination & Vibe"
-                placeholder="Where to? (e.g., 'A 5-day cyberpunk street food tour of Tokyo')"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
+              <div className="animate-stagger-2">
+                <TextAreaField
+                  id="trip-description"
+                  label="Destination & Vibe"
+                  placeholder="Where to? (e.g., 'A 5-day cyberpunk street food tour of Tokyo')"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-50/50 dark:bg-stone-950/50 p-6 rounded-2xl border border-stone-100 dark:border-stone-800/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-50/50 dark:bg-stone-950/50 p-6 rounded-2xl border border-stone-100 dark:border-stone-800/50 animate-stagger-3">
                 <InputField
                   id="budget"
                   label="Budget (Optional)"
@@ -162,17 +164,19 @@ export default function TripForm({ onSuccess }) {
                 />
               </div>
 
-              <InterestSelector
-                label="What excites you?"
-                interests={INTERESTS_LIST}
-                selectedInterests={interests}
-                onChange={setInterests}
-                disabled={isLoading}
-              />
+              <div className="animate-stagger-4">
+                <InterestSelector
+                  label="What excites you?"
+                  interests={INTERESTS_LIST}
+                  selectedInterests={interests}
+                  onChange={setInterests}
+                  disabled={isLoading}
+                />
+              </div>
             </fieldset>
 
             {!isLoading && !error && (
-              <div className="pt-6 flex justify-center sm:justify-end border-t border-stone-200/50 dark:border-stone-800/50">
+              <div className="pt-6 flex justify-center sm:justify-end border-t border-stone-200/50 dark:border-stone-800/50 animate-stagger-5">
                 <PrimaryButton type="submit" disabled={isLoading}>
                   <span className="flex items-center gap-2">
                     ✨ Generate Intelligence

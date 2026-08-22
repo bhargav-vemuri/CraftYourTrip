@@ -8,13 +8,18 @@ export default function Layout({ children }) {
     <div className="min-h-screen relative flex flex-col font-sans text-stone-900 dark:text-stone-100 selection:bg-emerald-300/30">
       
       {/* Background with glowing orbs */}
-      <div className="fixed inset-0 -z-10 bg-stone-50 dark:bg-stone-950 transition-colors duration-500 overflow-hidden">
+      <div className="fixed inset-0 -z-10 bg-[#f8f6f0] dark:bg-[#0f1110] transition-colors duration-500 overflow-hidden">
         {/* Abstract blur background elements with earthy tones */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-400/20 dark:bg-emerald-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-teal-400/20 dark:bg-teal-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float-delayed"></div>
-        <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] rounded-full bg-amber-300/20 dark:bg-amber-900/20 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-pulse-slow"></div>
+        {/* Top left - Forest Green */}
+        <div className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] rounded-full bg-emerald-500/15 dark:bg-emerald-900/15 blur-[120px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float"></div>
+        {/* Bottom right - Copper/Brown */}
+        <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-amber-700/20 dark:bg-orange-800/20 blur-[130px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float-delayed"></div>
+        {/* Center - Deep Teal */}
+        <div className="absolute top-[30%] left-[20%] w-[35%] h-[35%] rounded-full bg-teal-600/10 dark:bg-teal-900/15 blur-[140px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-float-slow"></div>
+        {/* Top right - Warm Gold */}
+        <div className="absolute top-[-5%] right-[10%] w-[25%] h-[25%] rounded-full bg-yellow-600/15 dark:bg-amber-600/15 blur-[100px] pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-pulse-slow"></div>
         {/* Noise overlay for texture */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] dark:opacity-[0.05] pointer-events-none mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] dark:opacity-[0.06] pointer-events-none mix-blend-overlay"></div>
       </div>
       
       {/* Top Navigation Bar */}
