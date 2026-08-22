@@ -143,72 +143,69 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
 
       <BudgetSummary itinerary={data} />
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
-        {/* Left Column: Itinerary */}
-        <div className="w-full lg:w-3/5 order-2 lg:order-1">
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCorners}
-            onDragStart={(e) => {
-              setActiveStopId(e.active.id);
-              handleDragStart(e);
-            }}
-            onDragOver={handleDragOver}
-            onDragEnd={handleDragEnd}
-          >
-            <div className="space-y-8">
-              {data.days.map((day, index) => (
-                <DayCard 
-                  key={`day-${day.day}-${index}`} 
-                  day={day} 
-                  dayIndex={index}
-                  onDeleteDay={handleDeleteDay}
-                  onAddStop={handleAddStop}
-                  onUpdateStop={handleUpdateStop}
-                  onDeleteStop={handleDeleteStop}
-                  onToggleFavorite={handleToggleFavorite}
-                  onOptimize={() => handleOptimizeDay(index)}
-                  onReplaceStop={(stopId) => handleReplaceStop(index, stopId)}
-                  activeStopId={activeStopId}
-                  onStopClick={onStopClick}
-                />
-              ))}
-              
-              {data.days.length === 0 && (
-                <div className="mt-12">
-                  <EmptyState />
-                </div>
-              )}
-            </div>
+      {/* Hero Map Container */}
+      <div className="w-full h-[400px] sm:h-[500px] mb-12 shadow-2xl rounded-3xl overflow-hidden ring-1 ring-stone-200 dark:ring-white/10 transition-shadow hover:shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)]">
+        <Map 
+          itinerary={data} 
+          activeStopId={activeStopId || dragActiveId}
+          onMarkerClick={(id) => {
+            setActiveStopId(id);
+            // Scroll to the card slightly
+            const el = document.getElementById(`stop-${id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+        />
+      </div>
 
-            <DragOverlay dropAnimation={dropAnimation}>
-              {draggedStop ? (
-                <StopCard 
-                  stop={draggedStop} 
-                  isOverlay={true}
-                  onUpdate={() => {}}
-                  onDelete={() => {}}
-                  onToggleFavorite={() => {}}
-                  onReplace={() => {}}
-                />
-              ) : null}
-            </DragOverlay>
-          </DndContext>
-        </div>
+      <div className="w-full max-w-4xl mx-auto">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragStart={(e) => {
+            setActiveStopId(e.active.id);
+            handleDragStart(e);
+          }}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="space-y-12">
+            {data.days.map((day, index) => (
+              <DayCard 
+                key={`day-${day.day}-${index}`} 
+                day={day} 
+                dayIndex={index}
+                onDeleteDay={handleDeleteDay}
+                onAddStop={handleAddStop}
+                onUpdateStop={handleUpdateStop}
+                onDeleteStop={handleDeleteStop}
+                onToggleFavorite={handleToggleFavorite}
+                onOptimize={() => handleOptimizeDay(index)}
+                onReplaceStop={(stopId) => handleReplaceStop(index, stopId)}
+                activeStopId={activeStopId}
+                onStopClick={onStopClick}
+              />
+            ))}
+            
+            {data.days.length === 0 && (
+              <div className="mt-12">
+                <EmptyState />
+              </div>
+            )}
+          </div>
 
-        {/* Right Column: Sticky Map */}
-        <div className="w-full lg:w-2/5 order-1 lg:order-2 lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-140px)] z-10 shadow-2xl rounded-3xl overflow-hidden ring-1 ring-stone-200 dark:ring-white/10 transition-shadow hover:shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)]">
-          <Map 
-            itinerary={data} 
-            activeStopId={activeStopId || dragActiveId}
-            onMarkerClick={(id) => {
-              setActiveStopId(id);
-              // Scroll to the card slightly (hacky but works without refs for now)
-              const el = document.getElementById(`stop-${id}`);
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }}
-          />
-        </div>
+          <DragOverlay dropAnimation={dropAnimation}>
+            {draggedStop ? (
+              <StopCard 
+                stop={draggedStop} 
+                isOverlay={true}
+                onUpdate={() => {}}
+                onDelete={() => {}}
+                onToggleFavorite={() => {}}
+                onReplace={() => {}}
+              />
+            ) : null}
+          </DragOverlay>
+        </DndContext>
       </div>
 
       <ConfirmationDialog 
