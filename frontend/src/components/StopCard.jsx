@@ -23,7 +23,7 @@ const StopCard = memo(function StopCard({
   });
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
     zIndex: isDragging ? 50 : 'auto',
     opacity: isDragging ? 0.3 : 1,
@@ -47,7 +47,7 @@ const StopCard = memo(function StopCard({
     <div 
       ref={setNodeRef} 
       style={style} 
-      className={`relative pl-8 sm:pl-32 py-6 group ${isOverlay ? 'scale-105 shadow-2xl opacity-100 z-50' : ''}`}
+      className={`relative pl-8 sm:pl-32 py-6 group ${isOverlay ? 'shadow-2xl opacity-100 z-50 bg-white/50 dark:bg-stone-900/50 rounded-3xl' : ''}`}
     >
       {/* Route Intelligence from previous stop (only show if it's not the first stop and has route info) */}
       {!isOverlay && stop.travelInfo && index > 0 && (
