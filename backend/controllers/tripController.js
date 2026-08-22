@@ -108,7 +108,7 @@ const generateTrip = async (req, res) => {
   } catch (error) {
     if (error.code === 'TIMEOUT') return res.status(504).json({ success: false, error: 'The request timed out.' });
     console.error('Trip Generation Error:', error);
-    return res.status(500).json({ success: false, error: 'An unexpected backend failure occurred.' });
+    return res.status(500).json({ success: false, error: error.message || 'An unexpected backend failure occurred.' });
   }
 };
 
@@ -135,7 +135,7 @@ const handleOptimizeDay = async (req, res) => {
   } catch (error) {
     if (error.code === 'TIMEOUT') return res.status(504).json({ success: false, error: 'The request timed out.' });
     console.error('Day Optimization Error:', error);
-    return res.status(500).json({ success: false, error: 'Optimization failed.' });
+    return res.status(500).json({ success: false, error: error.message || 'Optimization failed.' });
   }
 };
 
@@ -160,7 +160,7 @@ const handleReplaceStop = async (req, res) => {
   } catch (error) {
     if (error.code === 'TIMEOUT') return res.status(504).json({ success: false, error: 'The request timed out.' });
     console.error('Stop Replacement Error:', error);
-    return res.status(500).json({ success: false, error: 'Replacement failed.' });
+    return res.status(500).json({ success: false, error: error.message || 'Replacement failed.' });
   }
 };
 

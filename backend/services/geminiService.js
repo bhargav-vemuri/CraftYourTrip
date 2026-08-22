@@ -84,7 +84,7 @@ Estimate costs realistically.
     return result.response.text();
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
-    throw new Error('AI generation failed.');
+    throw new Error(error.message || 'AI generation failed.');
   }
 };
 
@@ -134,7 +134,7 @@ Provide the optimized day JSON now. Keep it realistic.
     return result.response.text();
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
-    throw new Error('AI optimization failed.');
+    throw new Error(error.message || 'AI optimization failed.');
   }
 };
 
@@ -178,7 +178,7 @@ Provide the replacement stop JSON now.
     return result.response.text();
   } catch (error) {
     if (error.code === 'TIMEOUT') throw error;
-    throw new Error('AI replacement failed.');
+    throw new Error(error.message || 'AI replacement failed.');
   }
 };
 
