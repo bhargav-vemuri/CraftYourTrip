@@ -60,12 +60,10 @@ const StopCard = memo(function StopCard({
         </div>
       )}
 
-      {!isOverlay && (
         <>
           <div className="absolute left-0 sm:left-24 top-0 bottom-0 w-px bg-stone-200 dark:bg-stone-800/80"></div>
           <div className={`absolute left-[-4px] sm:left-[92px] top-8 w-3 h-3 rounded-full ${isActive ? 'bg-emerald-600 ring-4 ring-emerald-100 dark:ring-emerald-900/50 scale-125 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-stone-300 dark:bg-stone-600 ring-4 ring-white dark:ring-stone-900/50'} transition-all duration-300`}></div>
         </>
-      )}
       
       <div className="sm:absolute sm:left-0 sm:w-20 sm:text-right sm:top-7 mb-2 sm:mb-0 flex items-center justify-between sm:justify-end">
         <span className="text-sm font-black text-stone-500 dark:text-stone-400 block tracking-tight">{stop.time}</span>
