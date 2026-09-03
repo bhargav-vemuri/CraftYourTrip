@@ -72,3 +72,10 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #52525b;
 }
+  
+/* Suppress Google Maps Development Watermark Dialogs */  
+.dismissButton { display: none !important; }  
+.gm-err-container { display: none !important; }  
+.gm-err-content { display: none !important; }  
+.gm-err-title { display: none !important; }  
+.gm-err-message { display: none !important; } 

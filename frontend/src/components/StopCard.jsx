@@ -1,6 +1,4 @@
 import React, { useState, memo } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import CategoryBadge from './CategoryBadge';
 import ExpandableSection from './ExpandableSection';
 import EditStopForm from './EditStopForm';
@@ -16,17 +14,6 @@ const StopCard = memo(function StopCard({
   onClick
 }) {
   const [isEditing, setIsEditing] = useState(false);
-
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ 
-    id: stop.id, disabled: isEditing 
-  });
-
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    transition,
-    zIndex: isDragging ? 50 : 1,
-    opacity: isDragging ? 0.5 : 1,
-  };
 
   if (isEditing) {
     return (
@@ -78,21 +65,20 @@ const StopCard = memo(function StopCard({
         }`}
       >
         
-        {/* Action controls */}
-        <div className={`absolute -top-3 right-4 bg-white dark:bg-stone-900 shadow-sm border rounded-lg flex items-center overflow-hidden transition-opacity duration-200 ${
-            isDragging || isActive ? 'opacity-100 border-emerald-200 dark:border-emerald-800' : 'opacity-0 group-hover:opacity-100 border-stone-200 dark:border-stone-800'
-          }`}
+        {/* Star Button (Top Right) */}
+        <button 
+          type="button" 
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleFavorite(); }} 
+          className="absolute top-4 right-4 p-1.5 transition-transform hover:scale-110 z-10" 
+          title="Favorite"
         >
-          <button {...attributes} {...listeners} className={`p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-50 dark:hover:bg-stone-800 cursor-grab`} title="Drag">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16"/></svg>
-          </button>
-          
-          <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onReplace(); }} className="p-1.5 hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-600 dark:text-teal-400 border-l border-stone-100 dark:border-stone-800 transition-colors" title="Ask AI for Alternative">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-          </button>
+          <svg className={`w-6 h-6 ${stop.isFavorite ? 'fill-amber-400 text-amber-400 drop-shadow-sm' : 'text-stone-300 dark:text-stone-600 hover:text-amber-400 drop-shadow-sm'}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+        </button>
 
-          <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleFavorite(); }} className="p-1.5 hover:bg-amber-50 dark:hover:bg-amber-900/20 border-l border-stone-100 dark:border-stone-800 transition-colors" title="Favorite">
-            <svg className={`w-4 h-4 ${stop.isFavorite ? 'fill-amber-400 text-amber-400' : 'text-stone-300 dark:text-stone-500 hover:text-amber-400'}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+        {/* Action controls (Hover) */}
+        <div className={`absolute -top-3 right-16 bg-white dark:bg-stone-900 shadow-sm border rounded-lg flex items-center overflow-hidden transition-opacity duration-200 opacity-0 group-hover:opacity-100 border-stone-200 dark:border-stone-800`}>
+          <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onReplace(); }} className="p-1.5 hover:bg-teal-50 dark:hover:bg-teal-900/20 text-teal-600 dark:text-teal-400 transition-colors" title="Ask AI for Alternative">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
           </button>
           <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsEditing(true); }} className="p-1.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-l border-stone-100 dark:border-stone-800 transition-colors" title="Edit">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>

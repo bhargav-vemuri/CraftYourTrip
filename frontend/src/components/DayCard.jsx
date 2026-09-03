@@ -1,6 +1,4 @@
 import React, { useState, memo } from 'react';
-import { useDroppable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import StopCard from './StopCard';
 import EditStopForm from './EditStopForm';
 
@@ -18,10 +16,6 @@ const DayCard = memo(function DayCard({
   onStopClick
 }) {
   const [isAdding, setIsAdding] = useState(false);
-
-  const { setNodeRef } = useDroppable({
-    id: `day-${day.day}`,
-  });
 
   return (
     <div className="mb-12 bg-white/70 dark:bg-stone-900/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/50 dark:border-stone-800/80 p-6 sm:p-8 relative group/day transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.3)]">
@@ -84,27 +78,27 @@ const DayCard = memo(function DayCard({
       </div>
     </div>
       
-      <div ref={setNodeRef} className="relative min-h-[50px]">
+      <div className="relative min-h-[50px]">
         {day.stops.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 px-4 border-2 border-dashed border-stone-200 dark:border-stone-800 rounded-2xl bg-stone-50/50 dark:bg-stone-900/50 text-center transition-colors">
+          <div className="py-8 text-center bg-stone-50/50 dark:bg-stone-800/20 rounded-2xl border border-dashed border-stone-200 dark:border-stone-800">
             <p className="text-sm font-semibold text-stone-500 dark:text-stone-400">No activities planned yet.</p>
           </div>
         ) : (
-          <SortableContext items={day.stops.map(s => s.id)} strategy={verticalListSortingStrategy}>
+          <>
             {day.stops.map((stop, i) => (
               <StopCard 
                 key={stop.id} 
                 stop={stop} 
                 index={i}
-                isActive={activeStopId === stop.id}
-                onClick={() => onStopClick(stop.id)}
-                onUpdate={(updatedStop) => onUpdateStop(dayIndex, stop.id, updatedStop)}
+                onUpdate={(updated) => onUpdateStop(dayIndex, stop.id, updated)}
                 onDelete={() => onDeleteStop(dayIndex, stop.id)}
                 onToggleFavorite={() => onToggleFavorite(dayIndex, stop.id)}
                 onReplace={() => onReplaceStop(stop.id)}
+                isActive={activeStopId === stop.id}
+                onClick={() => onStopClick(stop.id)}
               />
             ))}
-          </SortableContext>
+          </>
         )}
       </div>
 

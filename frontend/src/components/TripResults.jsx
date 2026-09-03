@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { DndContext, closestCorners, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
 import DayCard from './DayCard';
 import StopCard from './StopCard';
 import ConfirmationDialog from './ConfirmationDialog';
 import EmptyState from './EmptyState';
 import Map from './Map';
 import BudgetSummary from './BudgetSummary';
-import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import { useToast } from '../hooks/useToast';
 import { tripService } from '../services/tripService';
 
@@ -15,7 +13,6 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
   const [activeStopId, setActiveStopId] = useState(null);
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   
-  const { sensors, activeId: dragActiveId, handleDragStart, handleDragOver, handleDragEnd } = useDragAndDrop(data, setData);
   const { showToast } = useToast();
 
   React.useEffect(() => {
@@ -35,7 +32,7 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
           if (!isNaN(index)) setActiveDayIndex(index);
         }
       },
-      { rootMargin: '-10% 0px -40% 0px', threshold: [0, 0.1, 0.2, 0.5, 0.8, 1.0] }
+      { rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] }
     );
 
     const dayElements = document.querySelectorAll('.day-container');
@@ -198,68 +195,39 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
         
         {/* Itinerary Timeline (Left) */}
         <div className="w-full lg:w-3/5 xl:w-2/3 print:w-full">
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCorners}
-            onDragStart={(e) => {
-              setActiveStopId(e.active.id);
-              handleDragStart(e);
-            }}
-            onDragOver={handleDragOver}
-            onDragEnd={handleDragEnd}
-          >
-            <div className="space-y-12">
-              {data.days.map((day, index) => (
-                <div key={`day-wrap-${day.day}-${index}`} data-day-index={index} className="day-container">
-                  <DayCard 
-                    key={`day-${day.day}-${index}`} 
-                    day={day} 
-                    dayIndex={index}
-                    onDeleteDay={handleDeleteDay}
-                    onAddStop={(stop) => handleAddStop(index, stop)}
-                    onUpdateStop={handleUpdateStop}
-                    onDeleteStop={handleDeleteStop}
-                    onToggleFavorite={handleToggleFavorite}
-                    onOptimize={() => handleOptimizeDay(index)}
-                    onReplaceStop={(stopId) => handleReplaceStop(index, stopId)}
-                    activeStopId={activeStopId}
-                    onStopClick={onStopClick}
-                  />
-                </div>
-              ))}
-              
-              {data.days.length === 0 && (
-                <div className="mt-12">
-                  <EmptyState />
-                </div>
-              )}
-            </div>
-
-            {/* Note: CSS hover/scale transforms were removed from StopCard, so DragOverlay will now perfectly track the cursor without offsetting to the top of the screen. */}
-            <DragOverlay dropAnimation={null}>
-              {draggedStop ? (
-                <div className="day-container">
-                  <StopCard 
-                    stop={draggedStop} 
-                    index={0}
-                    onUpdate={() => {}}
-                    onDelete={() => {}}
-                    onToggleFavorite={() => {}}
-                    onReplace={() => {}}
-                    isActive={true}
-                    onClick={() => {}}
-                  />
-                </div>
-              ) : null}
-            </DragOverlay>
-          </DndContext>
+          <div className="space-y-12">
+            {data.days.map((day, index) => (
+              <div key={`day-wrap-${day.day}-${index}`} data-day-index={index} className="day-container">
+                <DayCard 
+                  key={`day-${day.day}-${index}`} 
+                  day={day} 
+                  dayIndex={index}
+                  onDeleteDay={handleDeleteDay}
+                  onAddStop={(stop) => handleAddStop(index, stop)}
+                  onUpdateStop={handleUpdateStop}
+                  onDeleteStop={handleDeleteStop}
+                  onToggleFavorite={handleToggleFavorite}
+                  onOptimize={() => handleOptimizeDay(index)}
+                  onReplaceStop={(stopId) => handleReplaceStop(index, stopId)}
+                  activeStopId={activeStopId}
+                  onStopClick={onStopClick}
+                />
+              </div>
+            ))}
+            
+            {data.days.length === 0 && (
+              <div className="mt-12">
+                <EmptyState />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Map Section (Right, Sticky) */}
         <div className="w-full lg:w-2/5 xl:w-1/3 lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-stone-200 dark:ring-white/10 transition-all z-10 print:hidden">
           <Map 
             itinerary={data} 
-            activeStopId={activeStopId || dragActiveId}
+            activeStopId={activeStopId}
             activeDayIndex={activeDayIndex}
             onMarkerClick={(id) => {
               setActiveStopId(id);
