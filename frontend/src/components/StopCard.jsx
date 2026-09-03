@@ -13,20 +13,19 @@ const StopCard = memo(function StopCard({
   onToggleFavorite,
   onReplace,
   isActive,
-  onClick,
-  isOverlay = false
+  onClick
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ 
-    id: stop.id, disabled: isEditing || isOverlay 
+    id: stop.id, disabled: isEditing 
   });
 
   const style = {
     transform: CSS.Translate.toString(transform),
     transition,
-    zIndex: isDragging ? 50 : 'auto',
-    opacity: isDragging ? 0.3 : 1,
+    zIndex: isDragging ? 50 : 1,
+    opacity: isDragging ? 0.5 : 1,
   };
 
   if (isEditing) {
@@ -47,10 +46,10 @@ const StopCard = memo(function StopCard({
     <div 
       ref={setNodeRef} 
       style={style} 
-      className={`relative pl-8 sm:pl-32 py-6 group ${isOverlay ? 'shadow-2xl opacity-100 z-50 bg-white/50 dark:bg-stone-900/50 rounded-3xl' : ''}`}
+      className={`relative pl-8 sm:pl-32 py-6 group transition-opacity`}
     >
       {/* Route Intelligence from previous stop (only show if it's not the first stop and has route info) */}
-      {!isOverlay && stop.travelInfo && index > 0 && (
+      {stop.travelInfo && index > 0 && (
         <div className="absolute left-4 sm:left-28 -top-3 bg-teal-50 dark:bg-teal-900/30 z-10 px-2 flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-800/50 rounded-full shadow-sm backdrop-blur-md">
           {stop.travelInfo.mode === 'Driving' ? (
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -76,7 +75,6 @@ const StopCard = memo(function StopCard({
         onClick={onClick}
         className={`bg-white/80 dark:bg-stone-900/80 backdrop-blur-lg rounded-2xl border p-5 transition-all duration-300 relative cursor-pointer group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] ${
           isDragging ? 'border-emerald-300 dark:border-emerald-700 shadow-xl ring-2 ring-emerald-100 dark:ring-emerald-900/50' : 
-          isOverlay ? 'border-emerald-400 dark:border-emerald-600 shadow-2xl ring-4 ring-emerald-200 dark:ring-emerald-900/50 cursor-grabbing' : 
           isActive ? 'border-emerald-400 dark:border-emerald-600 shadow-md ring-1 ring-emerald-400' :
           'border-stone-200/60 dark:border-stone-800/60 shadow-sm hover:border-emerald-200 dark:hover:border-emerald-800/80'
         }`}
@@ -84,10 +82,10 @@ const StopCard = memo(function StopCard({
         
         {/* Action controls */}
         <div className={`absolute -top-3 right-4 bg-white dark:bg-stone-900 shadow-sm border rounded-lg flex items-center overflow-hidden transition-opacity duration-200 ${
-            isOverlay || isDragging || isActive ? 'opacity-100 border-emerald-200 dark:border-emerald-800' : 'opacity-0 group-hover:opacity-100 border-stone-200 dark:border-stone-800'
+            isDragging || isActive ? 'opacity-100 border-emerald-200 dark:border-emerald-800' : 'opacity-0 group-hover:opacity-100 border-stone-200 dark:border-stone-800'
           }`}
         >
-          <button {...attributes} {...listeners} className={`p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-50 dark:hover:bg-stone-800 ${isOverlay ? 'cursor-grabbing' : 'cursor-grab'}`} title="Drag">
+          <button {...attributes} {...listeners} className={`p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-50 dark:hover:bg-stone-800 cursor-grab`} title="Drag">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16"/></svg>
           </button>
           

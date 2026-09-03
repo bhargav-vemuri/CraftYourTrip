@@ -66,7 +66,7 @@ const DayCard = memo(function DayCard({
             <div className="bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 border border-sky-100 dark:border-sky-800/50">
               <span>{day.weather.condition}</span>
               <span className="opacity-50">|</span>
-              <span>{day.weather.minTemp}°C - {day.weather.maxTemp}°C</span>
+              <span>{day.weather.minTemp}&deg;C - {day.weather.maxTemp}&deg;C</span>
             </div>
           )}
           {day.totalTravelTime && (

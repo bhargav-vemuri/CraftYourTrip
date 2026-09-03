@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, Polyline } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -12,7 +12,7 @@ const defaultCenter = {
   lng: 78.9629 // Center of India as fallback
 };
 
-export default function Map({ itinerary, activeStopId, onMarkerClick }) {
+export default function Map({ itinerary, activeStopId, onMarkerClick, activeDayIndex = 0 }) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -20,28 +20,35 @@ export default function Map({ itinerary, activeStopId, onMarkerClick }) {
 
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [path, setPath] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
 
-  // Extract all valid coordinates from itinerary
+  // Extract valid coordinates for the active day
   useEffect(() => {
     if (!itinerary || !itinerary.days) return;
     
     const newMarkers = [];
-    itinerary.days.forEach(day => {
+    const newPath = [];
+    
+    const day = itinerary.days[activeDayIndex];
+    if (day && day.stops) {
       day.stops.forEach(stop => {
         if (stop.coordinates && stop.coordinates.lat && stop.coordinates.lng) {
+          const pos = { lat: stop.coordinates.lat, lng: stop.coordinates.lng };
           newMarkers.push({
             id: stop.id,
-            position: { lat: stop.coordinates.lat, lng: stop.coordinates.lng },
+            position: pos,
             title: stop.name,
             dayTitle: day.title,
             dayNum: day.day
           });
+          newPath.push(pos);
         }
       });
-    });
+    }
     
     setMarkers(newMarkers);
+    setPath(newPath);
     
     // Auto-fit bounds if we have markers and the map is loaded
     if (map && newMarkers.length > 0) {
@@ -55,7 +62,7 @@ export default function Map({ itinerary, activeStopId, onMarkerClick }) {
         window.google.maps.event.removeListener(listener); 
       });
     }
-  }, [itinerary, map]);
+  }, [itinerary, map, activeDayIndex]);
 
   // Handle activeStopId changes (e.g. dragging)
   useEffect(() => {
@@ -105,6 +112,17 @@ export default function Map({ itinerary, activeStopId, onMarkerClick }) {
           ]
         }}
       >
+        {path.length > 1 && (
+          <Polyline
+            path={path}
+            options={{
+              strokeColor: "#10b981", // Emerald 500
+              strokeOpacity: 0.8,
+              strokeWeight: 4,
+            }}
+          />
+        )}
+
         {markers.map(marker => (
           <Marker
             key={marker.id}

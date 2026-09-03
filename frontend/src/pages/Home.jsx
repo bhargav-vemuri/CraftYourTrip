@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeroSection from '../components/HeroSection';
 import TripForm from '../components/TripForm';
 import TripResults from '../components/TripResults';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export default function Home() {
   const [itinerary, setItinerary] = useLocalStorage('craftyourtrip-itinerary', null);
+
+  // Ping backend to wake it up from Render free-tier sleep
+  useEffect(() => {
+    // Health route is at the root of the API server, so replace /api if needed or just ping /api/trips
+    axios.get(API_URL.replace('/api', '/health')).catch(() => {});
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center">

@@ -62,9 +62,13 @@ const generateTrip = async (req, res) => {
 
     // 3. Resolve Destination for Weather
     let destinationCoords = null;
-    const destPlace = await resolvePlace(itinerary.destination, itinerary.destination, 'City');
-    if (destPlace && destPlace.coordinates) {
-      destinationCoords = destPlace.coordinates;
+    
+    // Use the first stop's coordinates as the destination coordinates since the Google API is restricted
+    if (itinerary.days.length > 0 && itinerary.days[0].stops.length > 0) {
+      destinationCoords = itinerary.days[0].stops[0].coordinates;
+    }
+
+    if (destinationCoords && destinationCoords.lat && destinationCoords.lng) {
       // 4. Fetch Weather
       const weatherForecast = await getWeather(destinationCoords.lat, destinationCoords.lng, itinerary.days.length);
       
