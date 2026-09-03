@@ -59,7 +59,6 @@ const StopCard = memo(function StopCard({
       <div 
         onClick={onClick}
         className={`bg-white/80 dark:bg-stone-900/80 backdrop-blur-lg rounded-2xl border p-5 transition-all duration-300 relative cursor-pointer group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] ${
-          isDragging ? 'border-emerald-300 dark:border-emerald-700 shadow-xl ring-2 ring-emerald-100 dark:ring-emerald-900/50' : 
           isActive ? 'border-emerald-400 dark:border-emerald-600 shadow-md ring-1 ring-emerald-400' :
           'border-stone-200/60 dark:border-stone-800/60 shadow-sm hover:border-emerald-200 dark:hover:border-emerald-800/80'
         }`}

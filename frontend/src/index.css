@@ -74,8 +74,20 @@ body {
 }
   
 /* Suppress Google Maps Development Watermark Dialogs */  
+  
+/* Suppress Google Maps Development Watermark Dialogs */  
 .dismissButton { display: none !important; }  
 .gm-err-container { display: none !important; }  
 .gm-err-content { display: none !important; }  
 .gm-err-title { display: none !important; }  
 .gm-err-message { display: none !important; } 
+  
+@keyframes slideUnblur {  
+  0% { opacity: 0; transform: translateY(15px); filter: blur(10px); }  
+  15% { opacity: 1; transform: translateY(0); filter: blur(0); }  
+  85% { opacity: 1; transform: translateY(0); filter: blur(0); }  
+  100% { opacity: 0; transform: translateY(-15px); filter: blur(10px); }  
+}  
+.animate-premium-phrase {  
+  animation: slideUnblur 4.5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;  
+}

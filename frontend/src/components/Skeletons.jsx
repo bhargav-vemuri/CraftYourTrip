@@ -25,7 +25,7 @@ export function TripSkeleton() {
       <div className="text-center flex flex-col items-center justify-center">
         <h3 
           key={phraseIndex} 
-          className="text-2xl sm:text-4xl font-black text-stone-800 dark:text-stone-100 tracking-tight animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-amber-600 to-teal-600 pb-2 leading-relaxed"
+          className="text-2xl sm:text-4xl font-black text-stone-800 dark:text-stone-100 tracking-tight animate-premium-phrase bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-amber-600 to-teal-600 pb-2 leading-relaxed"
         >
           {LOADING_PHRASES[phraseIndex]}
         </h3>
