@@ -136,19 +136,6 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
     }
   };
 
-  const getActiveStop = () => {
-    if (!dragActiveId) return null;
-    for (const day of data.days) {
-      const stop = day.stops.find(s => s.id === dragActiveId);
-      if (stop) return stop;
-    }
-    return null;
-  };
-  const draggedStop = getActiveStop();
-
-  const dropAnimation = {
-    sideEffects: defaultDropAnimationSideEffects({ styles: { active: { opacity: '0.4' } } }),
-  };
 
   // Setup interaction when clicking stops or map
   const onStopClick = (stopId) => setActiveStopId(stopId);
