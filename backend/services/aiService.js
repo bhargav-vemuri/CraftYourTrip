@@ -65,8 +65,8 @@ const getCompletion = async (systemInstruction, userPrompt) => {
       { role: 'system', content: systemInstruction },
       { role: 'user', content: userPrompt }
     ],
-    model: 'llama-3.1-70b-versatile',
-    max_tokens: 6500,
+    model: 'llama3-70b-8192',
+    max_tokens: 5000,
     temperature: 0.7,
     response_format: { type: 'json_object' }
   });
