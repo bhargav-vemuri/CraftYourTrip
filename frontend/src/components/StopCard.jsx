@@ -77,23 +77,23 @@ const StopCard = memo(function StopCard({
 
         <ExpandableSection 
           preview={
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-lg font-bold text-stone-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">{stop.name}</h4>
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 min-w-0">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 min-w-0">
+                  <h4 className="text-lg font-bold text-stone-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors truncate">{stop.name}</h4>
                 </div>
                 {/* Place Validation Intelligence */}
                 {stop.rating ? (
-                  <div className="flex items-center gap-1 mt-1">
-                    <span className="text-xs font-bold text-stone-700 dark:text-stone-300">{stop.rating}</span>
-                    <svg className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <span className="text-xs text-stone-400 ml-1 truncate max-w-[200px]">{stop.address}</span>
+                  <div className="flex items-center gap-1 mt-1 min-w-0">
+                    <span className="text-xs font-bold text-stone-700 dark:text-stone-300 shrink-0">{stop.rating}</span>
+                    <svg className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span className="text-xs text-stone-400 ml-1 truncate">{stop.address}</span>
                   </div>
                 ) : stop.address ? (
-                  <div className="mt-1 text-xs text-stone-400 truncate max-w-[250px]">{stop.address}</div>
+                  <div className="mt-1 text-xs text-stone-400 truncate">{stop.address}</div>
                 ) : null}
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 shrink-0">
                 <CategoryBadge category={stop.category} />
                 {/* Star Button */}
                 <button 

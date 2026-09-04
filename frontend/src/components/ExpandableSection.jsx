@@ -6,14 +6,14 @@ export default function ExpandableSection({ defaultExpanded = false, preview, ch
   return (
     <div className="w-full">
       <div 
-        className="cursor-pointer group flex items-start justify-between" 
+        className="cursor-pointer group flex items-start justify-between min-w-0" 
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {preview}
         </div>
         <button 
-          className="ml-4 p-2 text-gray-400 group-hover:text-blue-500 rounded-full hover:bg-blue-50 transition-colors"
+          className="ml-4 p-2 shrink-0 text-gray-400 group-hover:text-blue-500 rounded-full hover:bg-blue-50 transition-colors"
           title={isExpanded ? "Collapse" : "Expand"}
         >
           <svg 

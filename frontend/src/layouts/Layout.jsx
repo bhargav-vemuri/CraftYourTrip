@@ -24,7 +24,7 @@ export default function Layout({ children }) {
       
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-stone-50/50 dark:bg-stone-950/50 border-b border-stone-200/20 dark:border-stone-800/50 supports-[backdrop-filter]:bg-stone-50/40 shadow-sm transition-all duration-300">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="w-full px-6 lg:px-12 xl:px-16 2xl:px-24 mx-auto h-16 flex items-center justify-between">
           
           <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.location.reload()}>
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
       </header>
 
       {/* Main Content */}
-      <main className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center flex-grow z-10">
+      <main className="w-full flex flex-col items-center flex-grow z-10 py-12">
         {children}
       </main>
 
