@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function ConfirmationDialog({ isOpen, title, message, onConfirm, onCancel }) {
   useEffect(() => {
@@ -19,8 +20,8 @@ export default function ConfirmationDialog({ isOpen, title, message, onConfirm, 
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 dark:bg-gray-950/70 backdrop-blur-sm animate-fade-in">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-gray-900/50 dark:bg-gray-950/70 backdrop-blur-sm animate-fade-in">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 w-full max-w-sm overflow-hidden animate-fade-in" style={{ animationDuration: '0.2s' }}>
         <div className="p-6">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
@@ -41,6 +42,7 @@ export default function ConfirmationDialog({ isOpen, title, message, onConfirm, 
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

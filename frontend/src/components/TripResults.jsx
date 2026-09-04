@@ -181,7 +181,7 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
       <div className="flex flex-col lg:flex-row gap-8 items-start relative">
         
         {/* Itinerary Timeline (Left) */}
-        <div className="w-full lg:w-3/5 xl:w-2/3 print:w-full">
+        <div className="w-full lg:w-1/2 xl:w-[55%] print:w-full">
           <div className="space-y-12">
             {data.days.map((day, index) => (
               <div key={`day-wrap-${day.day}-${index}`} data-day-index={index} className="day-container">
@@ -211,7 +211,7 @@ export default function TripResults({ itinerary: data, onUpdateItinerary: setDat
         </div>
 
         {/* Map Section (Right, Sticky) */}
-        <div className="w-full lg:w-2/5 xl:w-1/3 lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-stone-200 dark:ring-white/10 transition-all z-10 print:hidden">
+        <div className="w-full lg:w-1/2 xl:w-[45%] lg:sticky lg:top-24 h-[400px] lg:h-[calc(100vh-8rem)] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-stone-200 dark:ring-white/10 transition-all z-10 print:hidden">
           <Map 
             itinerary={data} 
             activeStopId={activeStopId}

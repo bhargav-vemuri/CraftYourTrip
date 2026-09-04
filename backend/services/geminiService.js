@@ -90,6 +90,8 @@ Generate a travel itinerary:
 - Travel Style: ${travelStyle || 'Not specified'}
 - Interests: ${interests && interests.length > 0 ? interests.join(', ') : 'Not specified'}
 
+IMPORTANT RULE: You MUST generate exactly the number of days specified in the Duration (${duration || '1 day'}). If the user requested 5 days, your "days" array MUST contain exactly 5 day objects. Do not shortcut or summarize multiple days into one.
+
 Be highly specific with place names so they can be looked up on Google Maps. 
 Estimate costs realistically.
 `;
