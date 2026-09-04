@@ -31,8 +31,6 @@ const StopCard = memo(function StopCard({
 
   return (
     <div 
-      ref={setNodeRef} 
-      style={style} 
       className={`relative pl-8 sm:pl-32 py-6 group transition-opacity`}
     >
       {/* Route Intelligence from previous stop (only show if it's not the first stop and has route info) */}
