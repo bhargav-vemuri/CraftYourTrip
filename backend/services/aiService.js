@@ -65,7 +65,9 @@ const getCompletion = async (systemInstruction, userPrompt) => {
       { role: 'system', content: systemInstruction },
       { role: 'user', content: userPrompt }
     ],
-    model: 'openai/gpt-oss-120b',
+    model: 'llama-3.1-70b-versatile',
+    max_tokens: 6500,
+    temperature: 0.7,
     response_format: { type: 'json_object' }
   });
 

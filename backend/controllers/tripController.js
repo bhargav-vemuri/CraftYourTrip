@@ -1,4 +1,4 @@
-const { generateItinerary, optimizeDay, replaceStop } = require('../services/geminiService');
+const { generateItinerary, optimizeDay, replaceStop } = require('../services/aiService');
 const { resolvePlace } = require('../services/placesService');
 const { calculateRoute } = require('../services/routesService');
 const { getWeather } = require('../services/weatherService');
